@@ -26,6 +26,7 @@ buttonDivide.addEventListener("click", divide);
 buttonMultiply.addEventListener("click", multiply);
 buttonSubtr.addEventListener("click", subtract);
 buttonAdd.addEventListener("click", addition);
+buttonEqual.addEventListener("click", equal);
 
 button1.addEventListener("click", digit1);
 button2.addEventListener("click", digit2);
@@ -37,6 +38,7 @@ button7.addEventListener("click", digit7);
 button8.addEventListener("click", digit8);
 button9.addEventListener("click", digit9);
 button0.addEventListener("click", digit0);
+buttonPoint.addEventListener("click", digitPoint);
 
 function clear(){
     display.value = "";
@@ -46,53 +48,69 @@ function clear(){
 }
 
 function divide() {
-    if (checkFirstNumber()==false)
+    if (firstNumber == null && currentNumber == null) {
+        alert("You didn't input first number");
+    } else {
+        if (firstNumber == null) {
+            refreshFirstNumber();
+        }
+    }
+    currentAction = "divide";
+}
+
+function equal(){
+    if (currentNumber == null) {
+        alert("You didn't input second number");
         return
-    checkSecondNumber();
-    activeAction = "divide";
-    refreshFirstNumber()
+    }
+    if (currentAction == "divide") {
+        currentNumber = firstNumber / currentNumber;
+    }
+    if (currentAction == "multiply") {
+        currentNumber = firstNumber * currentNumber;
+    }
+    if (currentAction == "subtract") {
+        currentNumber = firstNumber - currentNumber;
+    }
+    if (currentAction == "addition") {
+        currentNumber = +firstNumber + +currentNumber;
+    }
+    refreshInput();
+    firstNumber = null;
+    currentAction = null;
 }
 
 function multiply() {
-    if (checkFirstNumber()==false)
-        return
-    checkSecondNumber();
-    activeAction = "multiply";
-    refreshFirstNumber()
+    if (firstNumber == null && currentNumber == null) {
+        alert("You didn't input first number");
+    } else {
+        if (firstNumber == null) {
+            refreshFirstNumber();
+        }
+    }
+    currentAction = "multiply";
 }
 
 function subtract() {
-    if (checkFirstNumber()==false)
-        return
-    checkSecondNumber();
-    activeAction = "subtract";
-    refreshFirstNumber()
+    if (firstNumber == null && currentNumber == null) {
+        alert("You didn't input first number");
+    } else {
+        if (firstNumber == null) {
+            refreshFirstNumber();
+        }
+    }
+    currentAction = "subtract";
 }
 
 function addition() {
-    if (checkFirstNumber()==false)
-        return
-    checkSecondNumber();
-    activeAction = "addition";
-    refreshFirstNumber()
-}
-
-
-        function checkFirstNumber() {
-            if (firstNumber==null && currentNumber==null) {
-                alert("You didn't input first number");
-                return false
-            }
-            if (firstNumber == null) {
-                firstNumber = currentNumber;
-                currentNumber = null;
-            }
+    if (firstNumber == null && currentNumber == null) {
+        alert("You didn't input first number");
+    } else {
+        if (firstNumber == null) {
+            refreshFirstNumber();
         }
-
-
-function checkSecondNumber() {
-    if (firstNumber != null && currentNumber != null)
-        alert("You can calculate only two numbers");
+    }
+    currentAction = "addition";
 }
 
 function digit1() {
@@ -143,6 +161,14 @@ function digit9() {
 function digit0() {
     isNumberNull();
     currentNumber = currentNumber + "0";
+    refreshInput();
+}
+function digitPoint(){
+    if (currentNumber == null || (currentNumber.indexOf(".") != -1)) {
+        alert("Incorrect input");
+        return
+    }
+    currentNumber = currentNumber + ".";
     refreshInput();
 }
 
